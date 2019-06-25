@@ -28,6 +28,21 @@ def create(request):
 
     return redirect("/dashboard")
 
+def create_admin(request):
+    errors = User.objects.registration_validator(request.POST)
+
+    if len(errors) > 0:
+        # if the errors dictionary contains anything, loop through each key-value pair and make a flash message
+        for key, value in errors.items():
+            messages.error(request, value, extra_tags=key)
+        # redirect the user back to the form to fix the errors
+        return redirect('/')
+
+    hash1 = bcrypt.hashpw(request.POST['password'].encode(), bcrypt.gensalt())
+    user = User.objects.create(first_name=request.POST['first_name'],last_name=request.POST['last_name'],email=request.POST['email'],password=hash1)
+
+    return redirect("/dashboard")
+
 def login(request):
     errors = User.objects.login_validator(request.POST)
     print(errors)

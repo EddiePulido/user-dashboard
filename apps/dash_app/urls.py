@@ -21,4 +21,5 @@ urlpatterns = [
     url(r'^update_user/(?P<id>\d+)$', views.update_user),
     url(r'^delete_message/(?P<id>\d+)$', views.delete_message),
     url(r'^delete_comment/(?P<id>\d+)/(?P<user_id>\d+)$', views.delete_comment),
+    url(r'create/admin$', views.create_admin),
 ]
